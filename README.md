@@ -1,7 +1,7 @@
 Required Packages
-    (1) requests
-    (2) pandas
-    (3) BeautifulSoup
+    requests
+    pandas
+    BeautifulSoup
 
 
 To property run the program, please use the following command:

@@ -1,4 +1,18 @@
 import json
+import os
+def load_tree(processed_data, brands):
+    '''
+    This function is responsible for creating or loading the tree.
+    If tree file exists, then load the tree, else create the tree
+    '''
+    if os.path.isfile('tree.json'):
+        f = open('tree.json')
+        tree = json.load(f)
+        f.close()
+    else:
+        tree = build_tree(processed_data, brands)
+
+    return  tree
 
 
 def build_tree(data, brands):

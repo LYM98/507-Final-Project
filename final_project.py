@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 import os.path
-from data_structure import build_tree
+from data_structure import load_tree
 import json
 def page_scraping(url, model, mileage, price, dealer, dealer_rating, car_url):
     '''
@@ -120,14 +120,14 @@ def preprocessing_data(data):
     for m in col3:
         price.append(int(m.replace('$','').replace(',','')))
 
- 
-    
     data = data.drop(columns=['model','mileage','price'])
     data = data.assign(year = year, brand = brand, model = model, mileage = mileage, price = price)
+
     save_or_not = input('Data scraping is finished. Do you want to save the data? Please enter yes or no: ')
     if save_or_not == 'yes':
         file_name = input('Please enter the file name: ')
         data.to_json(file_name)
+
     return data
 
 
@@ -213,14 +213,7 @@ def main():
             data_file = input('The file you entered doesn\'t exist, please enter the file name again: ')
         processed_data = pd.read_json(data_file)
 
-    if os.path.isfile('tree.json'):
-        print('load')
-        f = open('tree.json')
-        tree = json.load(f)
-        f.close()
-    else:
-        print('build')
-        tree = build_tree(processed_data, brands)
+    tree = load_tree(processed_data, brands)
 
     while True:
         query = questions.copy()
